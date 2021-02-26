@@ -13,6 +13,9 @@ class Hero:
     # and are set to empty lists on initialization
     self.abilities = list()
     self.armors = list()
+
+    self.deaths = 0
+    self.kills = 0
     # we know the name of our hero, so we assign it here
     self.name = name
     # similarly, our starting health is passed in, just like name
@@ -35,10 +38,29 @@ class Hero:
     # Phases to implement:
     #1) randomly choose winner,
     #Hint: Look into random library, more specifically the choice method
-    heros = [self, opponent]
-    
-    winner = random.choice(heros)
-    print(winner.name + " won!")
+    if len(self.abilities) == 0 and len(opponent.abilies) == 0:
+      print(f"draw")
+    else: #if hero has ability
+      while self.is_alive() and opponent.is_alive():
+        opponent.take_damage(self.attack())
+        self.take_damage(opponent.attack())
+        if self.is_alive() == False:
+          print(f"{opponent.name} wins!")
+          self.add_death(1)
+          opponent.add_kill(1)
+        elif opponent.is_alive() == False:
+          self.add_kill(1)
+          opponent.add_death(1)
+          print(f"{self.name} wins!")
+
+  def add_kill(self, num_kills):
+    ''' Update self.kills by num_kills amount'''
+    self.kills += num_kills
+
+  def add_death(self, num_deaths):
+    ''' Update deaths with num_deaths'''
+    # TODO: This method should add the number of deaths to self.deaths
+    self.deaths += num_deaths
 
   def add_ability(self, ability):
     ''' Add ability to abilities list '''
@@ -97,24 +119,6 @@ class Hero:
         return False
     else:
         return True
-
-  def fight(self, opponent):  
-    ''' Current Hero will take turns fighting the opponent hero passed in.
-    '''
-    # TODO: Fight each hero until a victor emerges.
-    # Phases to implement:
-    # 0) check if at least one hero has abilities. If no hero has abilities, print "Draw"
-    # 1) else, start the fighting loop until a hero has won
-    # 2) the hero (self) and their opponent must attack each other and each must take damage from the other's attack
-    # 3) After each attack, check if either the hero (self) or the opponent is alive
-    # 4) if one of them has died, print "HeroName won!" replacing HeroName with the name of the hero, and end the fight loop
-    if len(self.abilities) == 0 and len(opponent.abilies) == 0:
-      print(f"draw")
-    else: #if hero has ability
-      while self.is_alive() and opponent.is_alive():
-        opponent.take_damage(self.attack())
-        self.take_damage(opponent.attack())
-      print(f"{self.name} wins!")
 
 
 if __name__ == "__main__":
