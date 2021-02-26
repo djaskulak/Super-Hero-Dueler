@@ -2,6 +2,7 @@ import random
 
 from ability import Ability
 from armor import Armor
+from weapon import Weapon
 
 class Hero:
 
@@ -19,6 +20,14 @@ class Hero:
     # when a hero is created, their current health is
     # always the same as their starting health (no damage taken yet!)
     self.current_health = starting_health
+
+  def add_weapon(self, weapon):
+    '''Add weapon to self.abilities'''
+    # TODO: This method will append the weapon object passed in as an
+    # argument to self.abilities.
+    # This means that self.abilities will be a list of
+    # abilities and weapons.
+    self.abilities.append(weapon)
 
   def fight(self, opponent):
     ''' Current Hero will take turns fighting the opponent hero passed in. '''
@@ -111,15 +120,7 @@ class Hero:
 if __name__ == "__main__":
     # If you run this file from the terminal
     # this block is executed.
-
-    hero1 = Hero("Wonder Woman")
-    hero2 = Hero("Dumbledore")
-    ability1 = Ability("Super Speed", 300)
-    ability2 = Ability("Super Eyes", 130)
-    ability3 = Ability("Wizard Wand", 80)
-    ability4 = Ability("Wizard Beard", 20)
-    hero1.add_ability(ability1)
-    hero1.add_ability(ability2)
-    hero2.add_ability(ability3)
-    hero2.add_ability(ability4)
-    hero1.fight(hero2)
+    hero = Hero("Wonder Woman")
+    weapon = Weapon("Lasso of Truth", 90)
+    hero.add_weapon(weapon)
+    print(hero.attack())
